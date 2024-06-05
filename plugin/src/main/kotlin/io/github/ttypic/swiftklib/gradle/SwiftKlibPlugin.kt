@@ -24,7 +24,7 @@ class SwiftKlibPlugin : Plugin<Project> {
         swiftKlibEntries.all { entry ->
             val name: String = entry.name
 
-            val targetToTaskName = CompileTarget.values().associateWith {
+            val targetToTaskName = CompileTarget.entries.associateWith {
                 getTaskName(name, it)
             }
 
@@ -53,7 +53,7 @@ class SwiftKlibPlugin : Plugin<Project> {
             val task = tasks.withType(CompileSwiftTask::class.java).findByName(taskName)
                 ?: return@configureEach
 
-            cinterop.settings.defFile = task.defFile
+            cinterop.settings.definitionFile.set(task.defFile)
             cinterop.dependsOn(task)
         }
     }
